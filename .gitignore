@@ -1,0 +1,14 @@
+__pycache__/
+*.pyc
+build/
+dist/
+release/
+*.spec
+*.db
+*.db-wal
+*.db-shm
+*.log
+settings.json
+patchy-data/
+vendor/
+.venv/

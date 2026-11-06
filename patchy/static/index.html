@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#161a21">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Patchy">
+<title>Patchy</title>
+<link rel="manifest" href="/manifest.webmanifest">
+<link rel="icon" href="/icon-small.svg" type="image/svg+xml">
+<link rel="icon" href="/icon-32.png" sizes="32x32" type="image/png">
+<link rel="apple-touch-icon" href="/icon-180.png">
+<link rel="stylesheet" href="/app.css">
+</head>
+<body>
+<header class="top">
+  <div class="brand"><img class="logo" src="/icon-small.svg" alt="">Patchy <span id="sitename"></span></div>
+  <nav class="rooms" id="rooms"></nav>
+  <select id="roomsel" aria-label="Room"></select>
+  <div class="views" role="tablist">
+    <button data-view="map" class="on"><span class="ico">◇</span>Map</button>
+    <button data-view="table"><span class="ico">☰</span>Patch table</button>
+    <button data-view="activity"><span class="ico">↺</span>Activity</button>
+  </div>
+  <input id="search" type="search" placeholder="Find device or channel…" autocomplete="off">
+  <button id="drift" class="drift" title="Routes that differ from the documentation"></button>
+  <div class="sync"><span id="syncinfo"></span><button id="syncnow" title="Read Dante now">Sync now</button><button id="settings" class="icon" title="Settings" aria-label="Settings">⚙</button></div>
+</header>
+
+<main>
+  <section id="map" class="view on">
+    <div class="canvas" id="canvas">
+      <svg id="wires"></svg>
+      <div id="cards"></div>
+    </div>
+    <div class="maptools">
+      <button id="fit" title="Fit to screen">Fit</button>
+      <button id="zoomout" title="Zoom out" aria-label="Zoom out">−</button>
+      <button id="zoomin" title="Zoom in" aria-label="Zoom in">+</button>
+      <button id="arrange" title="Lay the room (or every room) out left to right by signal flow">Arrange</button>
+      <label class="chk"><input type="checkbox" id="driftonly"> Drift only</label>
+      <button id="adddevice">+ Device</button>
+      <div class="legend">
+        <span class="k ok"></span>Matches live
+        <span class="k new"></span>Live, not documented
+        <span class="k missing"></span>Documented, not live
+        <span class="k manual"></span>Cable (documented)
+      </div>
+    </div>
+    <div class="empty" id="empty" hidden>
+      <h2>Nothing on the map yet</h2>
+      <p id="emptymsg"></p>
+      <div class="row"><button id="emptyadd" class="primary">+ Add a device</button><button id="emptysettings">Settings</button></div>
+    </div>
+    <div class="hint" id="hint">Pinch to zoom · drag to pan · tap a card for details · press and hold a card to move it</div>
+  </section>
+  <section id="table" class="view">
+    <div class="tabletools">
+      <label class="chk"><input type="checkbox" id="alldante"> Include unpatched Dante channels</label>
+      <a id="csv" class="btn" href="/api/export.csv">CSV</a>
+      <button onclick="window.print()">Print / PDF</button>
+    </div>
+    <div id="patch"></div>
+  </section>
+  <section id="activity" class="view"><div id="act"></div></section>
+  <aside id="panel" class="panel"></aside>
+</main>
+
+<dialog id="dlg"><form method="dialog" id="dlgform"></form></dialog>
+<script src="/app.js"></script>
+</body>
+</html>

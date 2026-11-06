@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 150 150">
+  <!-- Simplified patch bay for tab icons and the header: 2x2 jacks, one cable, one lit jack -->
+  <rect width="150" height="150" rx="34" fill="#161a21"/>
+  <rect x="24" y="30" width="102" height="82" rx="12" fill="#1b2029"/>
+  <g fill="#0e1014" stroke="#8b93a5" stroke-width="6">
+    <circle cx="52" cy="54" r="13"/><circle cx="98" cy="54" r="13"/>
+    <circle cx="52" cy="90" r="13"/><circle cx="98" cy="90" r="13"/>
+  </g>
+  <path d="M52 54 C 52 142, 98 142, 98 90" fill="none" stroke="#a78bfa" stroke-width="14" stroke-linecap="round"/>
+  <circle cx="52" cy="54" r="11" fill="#a78bfa"/><circle cx="98" cy="90" r="11" fill="#a78bfa"/>
+  <circle cx="98" cy="54" r="8" fill="#3fb68b"/>
+</svg>

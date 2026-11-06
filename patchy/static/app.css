@@ -119,6 +119,10 @@ table.ports th { color: var(--dim); font-weight: 500; font-size: 11px; text-tran
 
 /* patch table */
 #table { overflow-y: auto; -webkit-overflow-scrolling: touch; padding: 12px 18px 40px; }
+.layers { display: inline-flex; border: 1px solid var(--line); border-radius: 7px; overflow: hidden; flex: none; }
+.layers button { border: 0; border-radius: 0; background: transparent; padding: 4px 10px; }
+.layers button + button { border-left: 1px solid var(--line); }
+.layers button.on { background: var(--accent); color: #fff; }
 .tabletools { display: flex; gap: 10px; align-items: center; margin-bottom: 10px; flex-wrap: wrap; }
 .pdev { margin-bottom: 18px; break-inside: avoid; }
 .pdev h4 { margin: 0 0 4px; font-size: 15px; }

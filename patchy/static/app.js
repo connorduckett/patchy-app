@@ -18,11 +18,20 @@ const STATUS_TEXT = { ok: "Matches live", new: "Live, not documented", missing: 
   rerouted: "Rerouted", moved: "Changed (unlocked)" };
 const KINDS = ["analog", "aes", "madi", "sdi", "hdmi", "dmx", "sacn", "ethernet", "usb", "other"];
 const CATS = ["audio", "video", "lighting", "network", "control"];
+// Signal family of each port type: patches stay within a family, and the layer filter uses it.
+const FAMILY = { analog: "audio", aes: "audio", madi: "audio", dante: "audio", sdi: "video", hdmi: "video",
+  dmx: "lighting", sacn: "lighting", ethernet: "network", usb: "usb", other: "other" };
+const canPatch = (a, b) => {
+  if (a === "dante" || b === "dante") return a === b;
+  return FAMILY[a] === FAMILY[b] || a === "other" || b === "other";
+};
+const LAYERS = [["all", "All"], ["audio", "Audio"], ["video", "Video"], ["lighting", "Lighting"]];
 
 let S = null;               // server state
 let IX = {};                // indexes
 let room = ls.get("sm-room", "all");
 let view = ls.get("sm-view", "map");
+let layer = ls.get("sm-layer", "all");   // all | audio | video | lighting
 const narrow = () => window.matchMedia("(max-width: 760px)").matches;
 const camKey = () => "sm-cam-" + (narrow() ? "phone" : "wide");   // phones and desktops keep their own view
 let cam = ls.get(camKey(), null) || { x: 40, y: 20, k: 0.8 };
@@ -172,6 +181,24 @@ function inRoom(d) {
   return d.room_id === room;
 }
 
+const connInLayer = (c) => layer === "all" || FAMILY[IX.port.get(c.from_port).kind] === layer;
+const portInLayer = (p) => layer === "all" || FAMILY[p.kind] === layer;
+let LAYER_DEVS = null;   // device ids shown in the current layer (null = all)
+function computeLayer() {
+  if (layer === "all") { LAYER_DEVS = null; return; }
+  const ids = new Set(S.devices.filter((d) => d.category === layer).map((d) => d.id));
+  for (const c of IX.conns) if (connInLayer(c)) { ids.add(pdev(c.from_port).id); ids.add(pdev(c.to_port).id); }
+  LAYER_DEVS = ids;
+}
+const inLayer = (d) => !LAYER_DEVS || LAYER_DEVS.has(d.id);
+function renderLayers() {
+  const html = LAYERS.map(([k, t]) => `<button data-layer="${k}" class="${k === layer ? "on" : ""}" aria-pressed="${k === layer}">${t}</button>`).join("");
+  $$(".layers").forEach((el) => {
+    el.innerHTML = html;
+    $$("[data-layer]", el).forEach((b) => b.onclick = () => { layer = b.dataset.layer; ls.set("sm-layer", layer); render(); if (view === "map") fit(); });
+  });
+}
+
 // ---------- map ----------
 function layout() {
   // returns Map deviceId -> {x,y,ghost}
@@ -182,7 +209,7 @@ function layout() {
     let off = 0;
     const groups = [...S.rooms.map((r) => r.id), null];
     for (const rid of groups) {
-      const ds = S.devices.filter((d) => d.room_id === rid);
+      const ds = S.devices.filter((d) => d.room_id === rid && inLayer(d));
       if (!ds.length) continue;
       const minX = Math.min(...ds.map((d) => d.x ?? 0));
       let maxX = 0;
@@ -191,12 +218,13 @@ function layout() {
     }
     return pos;
   }
-  const mine = S.devices.filter(inRoom);
+  const mine = S.devices.filter((d) => inRoom(d) && inLayer(d));
   for (const d of mine) pos.set(d.id, { x: d.x ?? 0, y: d.y ?? 0, off: 0, dim: !matches(d) });
   // neighbours from other rooms become ghosts at the edges
   const minX = Math.min(0, ...mine.map((d) => d.x ?? 0)), maxX = Math.max(0, ...mine.map((d) => d.x ?? 0));
   const ins = new Set(), outs = new Set();
   for (const c of IX.conns) {
+    if (!connInLayer(c)) continue;
     const f = pdev(c.from_port), t = pdev(c.to_port);
     if (pos.has(t.id) && !pos.has(f.id) && !inRoom(f)) ins.add(f.id);
     if (pos.has(f.id) && !pos.has(t.id) && !inRoom(t)) outs.add(t.id);
@@ -227,6 +255,7 @@ function renderMap() {
   // edges grouped by device pair
   const edges = new Map();
   for (const c of IX.conns) {
+    if (!connInLayer(c)) continue;
     const f = pdev(c.from_port), t = pdev(c.to_port);
     if (!POS.has(f.id) || !POS.has(t.id)) continue;
     if (POS.get(f.id).ghost && POS.get(t.id).ghost) continue;
@@ -567,7 +596,7 @@ function dialog(html, onSubmit) {
 function patchDialog(pid) {
   const p = IX.port.get(pid), d = pdev(pid);
   const want = p.direction === "out" ? "in" : "out";
-  const ok = (q) => q.direction === want && (p.kind === "dante") === (q.kind === "dante");
+  const ok = (q) => q.direction === want && canPatch(p.kind, q.kind);
   const devs = S.devices.filter((x) => x.id !== d.id || p.kind !== "dante").filter((x) => (IX.portsByDev.get(x.id) || []).some(ok))
     .sort((a, b) => roomName(a.room_id).localeCompare(roomName(b.room_id)) || a.name.localeCompare(b.name));
   dialog(`<h3>Patch ${esc(d.name)} · ${esc(p.name)} ${p.direction === "out" ? "→" : "←"}</h3>
@@ -691,12 +720,12 @@ function renderTable() {
   const rooms = room === "all" ? [...S.rooms.map((r) => r.id), null] : [room === "none" ? null : room];
   let html = "";
   for (const rid of rooms) {
-    const ds = S.devices.filter((d) => d.room_id === rid)
+    const ds = S.devices.filter((d) => d.room_id === rid && inLayer(d))
       .filter((d) => !query || d.name.toLowerCase().includes(query) || (IX.portsByDev.get(d.id) || []).some((p) => (p.name + " " + p.label).toLowerCase().includes(query)));
     if (!ds.length) continue;
     html += `<div class="proom">${esc(rid == null ? "Unassigned" : roomName(rid))}</div>`;
     for (const d of ds) {
-      const ports = (IX.portsByDev.get(d.id) || []).filter((p) => allDante || worthShowing(p));
+      const ports = (IX.portsByDev.get(d.id) || []).filter((p) => (allDante || worthShowing(p)) && portInLayer(p));
       const rows = [];
       for (const p of ports.sort((a, b) => (a.direction === b.direction ? 0 : a.direction === "in" ? -1 : 1))) {
         const cs = (IX.connsByPort.get(p.id) || []).filter((c) => (p.direction === "out" ? c.from_port : c.to_port) === p.id);
@@ -737,6 +766,8 @@ async function renderActivity() {
 // ---------- top-level ----------
 function render() {
   renderHeader();
+  computeLayer();
+  renderLayers();
   $$(".views button").forEach((b) => b.classList.toggle("on", b.dataset.view === view));
   $$(".view").forEach((v) => v.classList.toggle("on", v.id === view));
   if (view === "map") renderMap();

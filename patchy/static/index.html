@@ -37,6 +37,7 @@
       <div id="cards"></div>
     </div>
     <div class="maptools">
+      <div class="layers" role="group" aria-label="Show signal type"></div>
       <button id="fit" title="Fit to screen">Fit</button>
       <button id="zoomout" title="Zoom out" aria-label="Zoom out">−</button>
       <button id="zoomin" title="Zoom in" aria-label="Zoom in">+</button>
@@ -59,6 +60,7 @@
   </section>
   <section id="table" class="view">
     <div class="tabletools">
+      <div class="layers" role="group" aria-label="Show signal type"></div>
       <label class="chk"><input type="checkbox" id="alldante"> Include unpatched Dante channels</label>
       <a id="csv" class="btn" href="/api/export.csv">CSV</a>
       <button onclick="window.print()">Print / PDF</button>

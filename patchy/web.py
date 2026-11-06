@@ -20,6 +20,19 @@ mimetypes.add_type("image/svg+xml", ".svg")
 mimetypes.add_type("text/javascript", ".js")   # Windows registry can map .js to something odd
 KINDS = {"analog", "aes", "dante", "madi", "sdi", "hdmi", "dmx", "sacn", "ethernet", "usb", "other"}
 CATEGORIES = {"audio", "video", "lighting", "network", "control"}
+# Ports can only be patched within a signal family (a DMX output can't feed an SDI input).
+# "other" patches to anything except Dante; Dante only patches to Dante.
+FAMILY = {"analog": "audio", "aes": "audio", "madi": "audio", "dante": "dante", "sdi": "video", "hdmi": "video",
+          "dmx": "lighting", "sacn": "lighting", "ethernet": "network", "usb": "usb", "other": "other"}
+
+
+def can_patch(kind_a, kind_b):
+    fa, fb = FAMILY.get(kind_a, "other"), FAMILY.get(kind_b, "other")
+    if "dante" in (fa, fb):
+        return fa == fb
+    return fa == fb or "other" in (fa, fb)
+
+
 DEVICE_FIELDS = ("name", "room_id", "category", "make", "model", "ip", "control_ip", "location", "notes", "x", "y")
 
 
@@ -331,9 +344,11 @@ def make_handler(store, sync, cfg, vh=None, on_quit=None):
                     pt = store.one("SELECT * FROM ports WHERE id = ?", (tp,))
                     if not pf or not pt or pf["direction"] != "out" or pt["direction"] != "in":
                         raise ApiError(400, "Patch must go from an output to an input")
-                    if pt["kind"] == "dante" or pf["kind"] == "dante":
-                        if not (pt["kind"] == pf["kind"] == "dante"):
+                    if not can_patch(pf["kind"], pt["kind"]):
+                        if "dante" in (pf["kind"], pt["kind"]):
                             raise ApiError(400, "Dante channels can only patch to Dante channels")
+                        raise ApiError(400, f"Can't patch {pf['kind'].upper()} to {pt['kind'].upper()}: "
+                                            "they carry different kinds of signal")
                     existing = store.one("SELECT id FROM connections WHERE from_port = ? AND to_port = ?", (fp, tp))
                     if existing:
                         store.x("UPDATE connections SET documented = 1, cable = ?, notes = ? WHERE id = ?",

@@ -90,7 +90,8 @@ def smoke(exe):
     # Loads netaudio's native core library too; no Dante devices on a build machine, so any answer will do.
     subprocess.run([exe, "--netaudio-child", out, "--json", "--timeout", "2", "device", "list"], timeout=120, check=False)
     err = open(out + ".err", encoding="utf-8", errors="replace").read() if os.path.exists(out + ".err") else ""
-    if "Traceback" in err or "netaudio_core" in err:
+    # (Network warnings are expected on a build machine; only a missing module or library is a failure.)
+    if any(w in err for w in ("netaudio_core", "NetaudioCoreError", "ModuleNotFoundError", "ImportError")):
         raise SystemExit(f"Smoke test failed: netaudio's core library didn't load.\n{err[-1500:]}")
     print("Smoke test passed")
 

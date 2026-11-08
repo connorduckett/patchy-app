@@ -425,9 +425,12 @@ function zoomBy(f) { const el = $("#canvas"); zoomAt(cam.k * f, el.clientWidth /
   canvas.addEventListener("wheel", (ev) => {
     ev.preventDefault();
     const p = local(ev);
-    // trackpad pinch arrives as ctrl+wheel; plain two-finger scroll pans
-    if (ev.ctrlKey || ev.deltaMode !== 0 || Math.abs(ev.deltaX) < 1 && Number.isInteger(ev.deltaY) && Math.abs(ev.deltaY) >= 50) {
-      zoomAt(cam.k * Math.exp(-ev.deltaY * (ev.ctrlKey ? 0.01 : 0.0015)), p.x, p.y);
+    // Cmd or Ctrl + scroll zooms (a trackpad pinch also arrives as ctrl+wheel). A mouse wheel zooms on its own;
+    // plain two-finger trackpad scroll pans.
+    const notch = ev.deltaMode !== 0 || Math.abs(ev.deltaX) < 1 && Number.isInteger(ev.deltaY) && Math.abs(ev.deltaY) >= 50;
+    if (ev.ctrlKey || ev.metaKey || notch) {
+      const dy = Math.max(-60, Math.min(60, ev.deltaY || ev.deltaX));
+      zoomAt(cam.k * Math.exp(-dy * (notch ? 0.0025 : 0.01)), p.x, p.y);
     } else { cam.x -= ev.deltaX; cam.y -= ev.deltaY; applyCam(); }
   }, { passive: false });
   // Safari's own pinch gesture events would zoom the whole page

@@ -12,7 +12,7 @@ import time
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from urllib.parse import parse_qs, urlparse
 
-from . import __version__, autostart, config, paths
+from . import __version__, autostart, config, library, paths
 
 STATIC = paths.static_dir()
 mimetypes.add_type("application/manifest+json", ".webmanifest")
@@ -257,7 +257,7 @@ def make_handler(store, sync, cfg, vh=None, on_quit=None):
                     return self._send(200, {"ok": True})
 
             if res == "devices":
-                if method == "POST":
+                if method == "POST" and rid is None:
                     if b.get("category", "audio") not in CATEGORIES:
                         raise ValueError("category")
                     new = store.x("INSERT INTO devices(room_id, name, category, make, model, ip, location, notes, x, y) "
@@ -266,10 +266,16 @@ def make_handler(store, sync, cfg, vh=None, on_quit=None):
                                    b.get("model", ""), b.get("ip", ""), b.get("location", ""), b.get("notes", ""),
                                    b.get("x", 60), b.get("y", 60)))
                     store.log(who, f"Added device {b['name']}")
+                    if b.get("library"):
+                        library.apply(store, new, b["library"], b.get("choices") or {}, who)
                     return self._send(201, {"id": new})
                 dev = store.one("SELECT * FROM devices WHERE id = ?", (rid,))
                 if not dev:
                     raise ApiError(404, "no such device")
+                if method == "POST" and action == "library":
+                    return self._send(200, library.apply(store, rid, b["model"], b.get("choices") or {}, who))
+                if method == "PATCH" and "dante_name" in b and (b["dante_name"] or None) != dev["dante_name"]:
+                    library.link_dante(store, rid, b["dante_name"], who)
                 if method == "PATCH":
                     fields = {k: b[k] for k in DEVICE_FIELDS if k in b}
                     if "category" in fields and fields["category"] not in CATEGORIES:
@@ -316,7 +322,7 @@ def make_handler(store, sync, cfg, vh=None, on_quit=None):
                 if not port:
                     raise ApiError(404, "no such port")
                 if method == "PATCH":
-                    if port["kind"] == "dante" and "name" in b:
+                    if port["kind"] == "dante" and port["source"] != "library" and "name" in b:
                         raise ApiError(400, "Rename Dante channels in Dante Controller; set a label here instead")
                     if port["source"] == "videohub":
                         raise ApiError(400, "Videohub labels come from the hub; rename them in Videohub Setup")
@@ -325,7 +331,7 @@ def make_handler(store, sync, cfg, vh=None, on_quit=None):
                     store.log(who, f"Edited port {port['dev']} / {port['name']}")
                     return self._send(200, {"ok": True})
                 if method == "DELETE":
-                    if port["source"] != "manual":
+                    if port["source"] not in ("manual", "library"):
                         raise ApiError(400, "Ports read from the network can't be deleted here")
                     store.x("DELETE FROM ports WHERE id = ?", (rid,))
                     store.log(who, f"Deleted port {port['dev']} / {port['name']}")

@@ -1,0 +1,1567 @@
+{
+ "version": 1,
+ "updated": "2026-11-08",
+ "about": "Device I/O from manufacturers' spec sheets. 'note' marks numbers that weren't fully confirmed.",
+ "models": [
+  {
+   "id": "yamaha-cl1",
+   "make": "Yamaha",
+   "model": "CL1",
+   "category": "audio",
+   "summary": "Discontinued. 48 mono + 8 stereo console: 8 in, 8 out, Dante 64x64, 1 AES out, 3 MY slots.",
+   "ports": [
+    {
+     "dir": "in",
+     "kind": "analog",
+     "count": 8,
+     "name": "Input"
+    },
+    {
+     "dir": "out",
+     "kind": "analog",
+     "count": 8,
+     "name": "Omni Out"
+    },
+    {
+     "dir": "out",
+     "kind": "aes",
+     "count": 2,
+     "name": "AES Out"
+    },
+    {
+     "dir": "in",
+     "kind": "dante",
+     "count": 64,
+     "name": "Dante In"
+    },
+    {
+     "dir": "out",
+     "kind": "dante",
+     "count": 64,
+     "name": "Dante Out"
+    },
+    {
+     "dir": "in",
+     "kind": "ethernet",
+     "count": 1,
+     "name": "Network"
+    }
+   ],
+   "confidence": "confirmed",
+   "source": "https://usa.yamaha.com/products/proaudio/mixers/cl_series/specs.html"
+  },
+  {
+   "id": "yamaha-cl3",
+   "make": "Yamaha",
+   "model": "CL3",
+   "category": "audio",
+   "summary": "Discontinued. 64 mono + 8 stereo console: 8 in, 8 out, Dante 64x64, 1 AES out, 3 MY slots.",
+   "ports": [
+    {
+     "dir": "in",
+     "kind": "analog",
+     "count": 8,
+     "name": "Input"
+    },
+    {
+     "dir": "out",
+     "kind": "analog",
+     "count": 8,
+     "name": "Omni Out"
+    },
+    {
+     "dir": "out",
+     "kind": "aes",
+     "count": 2,
+     "name": "AES Out"
+    },
+    {
+     "dir": "in",
+     "kind": "dante",
+     "count": 64,
+     "name": "Dante In"
+    },
+    {
+     "dir": "out",
+     "kind": "dante",
+     "count": 64,
+     "name": "Dante Out"
+    },
+    {
+     "dir": "in",
+     "kind": "ethernet",
+     "count": 1,
+     "name": "Network"
+    }
+   ],
+   "confidence": "confirmed",
+   "source": "https://usa.yamaha.com/products/proaudio/mixers/cl_series/specs.html"
+  },
+  {
+   "id": "yamaha-cl5",
+   "make": "Yamaha",
+   "model": "CL5",
+   "category": "audio",
+   "summary": "Discontinued. 72 mono + 8 stereo console: 8 local in, 8 out, Dante 64x64, 1 AES out, 3 MY slots.",
+   "ports": [
+    {
+     "dir": "in",
+     "kind": "analog",
+     "count": 8,
+     "name": "Input"
+    },
+    {
+     "dir": "out",
+     "kind": "analog",
+     "count": 8,
+     "name": "Omni Out"
+    },
+    {
+     "dir": "out",
+     "kind": "aes",
+     "count": 2,
+     "name": "AES Out"
+    },
+    {
+     "dir": "in",
+     "kind": "dante",
+     "count": 64,
+     "name": "Dante In"
+    },
+    {
+     "dir": "out",
+     "kind": "dante",
+     "count": 64,
+     "name": "Dante Out"
+    },
+    {
+     "dir": "in",
+     "kind": "ethernet",
+     "count": 1,
+     "name": "Network"
+    }
+   ],
+   "confidence": "confirmed",
+   "source": "https://usa.yamaha.com/products/proaudio/mixers/cl_series/specs.html"
+  },
+  {
+   "id": "yamaha-dm3",
+   "make": "Yamaha",
+   "model": "DM3",
+   "category": "audio",
+   "summary": "Compact 22-ch console: 16 mic/line in (12 XLR + 4 combo), 8 out, Dante 16x16, USB 18x18.",
+   "ports": [
+    {
+     "dir": "in",
+     "kind": "analog",
+     "count": 16,
+     "name": "Input"
+    },
+    {
+     "dir": "out",
+     "kind": "analog",
+     "count": 8,
+     "name": "Omni Out"
+    },
+    {
+     "dir": "in",
+     "kind": "dante",
+     "count": 16,
+     "name": "Dante In"
+    },
+    {
+     "dir": "out",
+     "kind": "dante",
+     "count": 16,
+     "name": "Dante Out"
+    },
+    {
+     "dir": "in",
+     "kind": "usb",
+     "count": 18,
+     "name": "USB In"
+    },
+    {
+     "dir": "out",
+     "kind": "usb",
+     "count": 18,
+     "name": "USB Out"
+    },
+    {
+     "dir": "out",
+     "kind": "analog",
+     "count": 1,
+     "name": "Phones L"
+    },
+    {
+     "dir": "out",
+     "kind": "analog",
+     "count": 1,
+     "name": "Phones R"
+    },
+    {
+     "dir": "in",
+     "kind": "ethernet",
+     "count": 1,
+     "name": "Network"
+    }
+   ],
+   "confidence": "confirmed",
+   "source": "https://usa.yamaha.com/products/proaudio/mixers/dm3/specs.html ; https://usa.yamaha.com/products/proaudio/mixers/dm3/index.html"
+  },
+  {
+   "id": "yamaha-dm3-standard",
+   "make": "Yamaha",
+   "model": "DM3 Standard",
+   "category": "audio",
+   "summary": "DM3 without Dante: 16 in, 8 out, USB 18x18.",
+   "ports": [
+    {
+     "dir": "in",
+     "kind": "analog",
+     "count": 16,
+     "name": "Input"
+    },
+    {
+     "dir": "out",
+     "kind": "analog",
+     "count": 8,
+     "name": "Omni Out"
+    },
+    {
+     "dir": "in",
+     "kind": "usb",
+     "count": 18,
+     "name": "USB In"
+    },
+    {
+     "dir": "out",
+     "kind": "usb",
+     "count": 18,
+     "name": "USB Out"
+    },
+    {
+     "dir": "out",
+     "kind": "analog",
+     "count": 1,
+     "name": "Phones L"
+    },
+    {
+     "dir": "out",
+     "kind": "analog",
+     "count": 1,
+     "name": "Phones R"
+    },
+    {
+     "dir": "in",
+     "kind": "ethernet",
+     "count": 1,
+     "name": "Network"
+    }
+   ],
+   "confidence": "confirmed",
+   "source": "https://usa.yamaha.com/products/proaudio/mixers/dm3/specs.html"
+  },
+  {
+   "id": "yamaha-dm7",
+   "make": "Yamaha",
+   "model": "DM7",
+   "category": "audio",
+   "summary": "120-input digital console: 32 local mic/line in, 16 omni out, 144x144 built-in Dante, 2+2 AES (4 ch each way), 1 PY slot, 18x18 USB.",
+   "ports": [
+    {
+     "dir": "in",
+     "kind": "analog",
+     "count": 32,
+     "name": "Input"
+    },
+    {
+     "dir": "out",
+     "kind": "analog",
+     "count": 16,
+     "name": "Omni Out"
+    },
+    {
+     "dir": "in",
+     "kind": "aes",
+     "count": 4,
+     "name": "AES In"
+    },
+    {
+     "dir": "out",
+     "kind": "aes",
+     "count": 4,
+     "name": "AES Out"
+    },
+    {
+     "dir": "in",
+     "kind": "dante",
+     "count": 144,
+     "name": "Dante In"
+    },
+    {
+     "dir": "out",
+     "kind": "dante",
+     "count": 144,
+     "name": "Dante Out"
+    },
+    {
+     "dir": "in",
+     "kind": "usb",
+     "count": 18,
+     "name": "USB In"
+    },
+    {
+     "dir": "out",
+     "kind": "usb",
+     "count": 18,
+     "name": "USB Out"
+    },
+    {
+     "dir": "out",
+     "kind": "analog",
+     "count": 1,
+     "name": "Phones L"
+    },
+    {
+     "dir": "out",
+     "kind": "analog",
+     "count": 1,
+     "name": "Phones R"
+    },
+    {
+     "dir": "in",
+     "kind": "ethernet",
+     "count": 1,
+     "name": "Network"
+    }
+   ],
+   "confidence": "confirmed",
+   "source": "https://usa.yamaha.com/products/proaudio/mixers/dm7/specs.html ; https://usa.yamaha.com/products/proaudio/mixers/dm7/index.html ; https://usa.yamaha.com/products/proaudio/mixers/dm7/features.html",
+   "options": [
+    {
+     "slot": "PY Slot",
+     "choices": [
+      {
+       "name": "PY64-D (Dante)",
+       "ports": [
+        {
+         "dir": "in",
+         "kind": "dante",
+         "count": 64,
+         "name": "Dante In"
+        },
+        {
+         "dir": "out",
+         "kind": "dante",
+         "count": 64,
+         "name": "Dante Out"
+        }
+       ],
+       "separate": true
+      },
+      {
+       "name": "PY64-MD (MADI)",
+       "ports": [
+        {
+         "dir": "in",
+         "kind": "madi",
+         "count": 64,
+         "name": "MADI In"
+        },
+        {
+         "dir": "out",
+         "kind": "madi",
+         "count": 64,
+         "name": "MADI Out"
+        }
+       ]
+      },
+      {
+       "name": "PY8-AE (AES/EBU)",
+       "ports": [
+        {
+         "dir": "in",
+         "kind": "aes",
+         "count": 8,
+         "name": "AES In"
+        },
+        {
+         "dir": "out",
+         "kind": "aes",
+         "count": 8,
+         "name": "AES Out"
+        }
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "yamaha-dm7-compact",
+   "make": "Yamaha",
+   "model": "DM7 Compact",
+   "category": "audio",
+   "summary": "72-input compact DM7: 16 local in, 16 omni out, 144x144 built-in Dante, 1 AES out (2 ch), no AES in, 1 PY slot, 18x18 USB.",
+   "ports": [
+    {
+     "dir": "in",
+     "kind": "analog",
+     "count": 16,
+     "name": "Input"
+    },
+    {
+     "dir": "out",
+     "kind": "analog",
+     "count": 16,
+     "name": "Omni Out"
+    },
+    {
+     "dir": "out",
+     "kind": "aes",
+     "count": 2,
+     "name": "AES Out"
+    },
+    {
+     "dir": "in",
+     "kind": "dante",
+     "count": 144,
+     "name": "Dante In"
+    },
+    {
+     "dir": "out",
+     "kind": "dante",
+     "count": 144,
+     "name": "Dante Out"
+    },
+    {
+     "dir": "in",
+     "kind": "usb",
+     "count": 18,
+     "name": "USB In"
+    },
+    {
+     "dir": "out",
+     "kind": "usb",
+     "count": 18,
+     "name": "USB Out"
+    },
+    {
+     "dir": "out",
+     "kind": "analog",
+     "count": 1,
+     "name": "Phones L"
+    },
+    {
+     "dir": "out",
+     "kind": "analog",
+     "count": 1,
+     "name": "Phones R"
+    },
+    {
+     "dir": "in",
+     "kind": "ethernet",
+     "count": 1,
+     "name": "Network"
+    }
+   ],
+   "confidence": "confirmed",
+   "source": "https://usa.yamaha.com/products/proaudio/mixers/dm7/specs.html ; https://usa.yamaha.com/products/proaudio/mixers/dm7/index.html",
+   "options": [
+    {
+     "slot": "PY Slot",
+     "choices": [
+      {
+       "name": "PY64-D (Dante)",
+       "ports": [
+        {
+         "dir": "in",
+         "kind": "dante",
+         "count": 64,
+         "name": "Dante In"
+        },
+        {
+         "dir": "out",
+         "kind": "dante",
+         "count": 64,
+         "name": "Dante Out"
+        }
+       ],
+       "separate": true
+      },
+      {
+       "name": "PY64-MD (MADI)",
+       "ports": [
+        {
+         "dir": "in",
+         "kind": "madi",
+         "count": 64,
+         "name": "MADI In"
+        },
+        {
+         "dir": "out",
+         "kind": "madi",
+         "count": 64,
+         "name": "MADI Out"
+        }
+       ]
+      },
+      {
+       "name": "PY8-AE (AES/EBU)",
+       "ports": [
+        {
+         "dir": "in",
+         "kind": "aes",
+         "count": 8,
+         "name": "AES In"
+        },
+        {
+         "dir": "out",
+         "kind": "aes",
+         "count": 8,
+         "name": "AES Out"
+        }
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "yamaha-ql1",
+   "make": "Yamaha",
+   "model": "QL1",
+   "category": "audio",
+   "summary": "Discontinued. 32 mono + 8 stereo console: 16 in, 8 out, Dante 32x32, 1 AES out, 2 MY slots.",
+   "ports": [
+    {
+     "dir": "in",
+     "kind": "analog",
+     "count": 16,
+     "name": "Input"
+    },
+    {
+     "dir": "out",
+     "kind": "analog",
+     "count": 8,
+     "name": "Omni Out"
+    },
+    {
+     "dir": "out",
+     "kind": "aes",
+     "count": 2,
+     "name": "AES Out"
+    },
+    {
+     "dir": "in",
+     "kind": "dante",
+     "count": 32,
+     "name": "Dante In"
+    },
+    {
+     "dir": "out",
+     "kind": "dante",
+     "count": 32,
+     "name": "Dante Out"
+    },
+    {
+     "dir": "in",
+     "kind": "ethernet",
+     "count": 1,
+     "name": "Network"
+    }
+   ],
+   "confidence": "partly confirmed",
+   "source": "https://usa.yamaha.com/products/proaudio/mixers/ql_series/specs.html",
+   "note": "Yamaha's spec table mixes QL and CL columns, so double-check these counts."
+  },
+  {
+   "id": "yamaha-ql5",
+   "make": "Yamaha",
+   "model": "QL5",
+   "category": "audio",
+   "summary": "Discontinued. 64 mono + 8 stereo console: 32 in, 16 out, Dante 64x64, 1 AES out, 2 MY slots.",
+   "ports": [
+    {
+     "dir": "in",
+     "kind": "analog",
+     "count": 32,
+     "name": "Input"
+    },
+    {
+     "dir": "out",
+     "kind": "analog",
+     "count": 16,
+     "name": "Omni Out"
+    },
+    {
+     "dir": "out",
+     "kind": "aes",
+     "count": 2,
+     "name": "AES Out"
+    },
+    {
+     "dir": "in",
+     "kind": "dante",
+     "count": 64,
+     "name": "Dante In"
+    },
+    {
+     "dir": "out",
+     "kind": "dante",
+     "count": 64,
+     "name": "Dante Out"
+    },
+    {
+     "dir": "in",
+     "kind": "ethernet",
+     "count": 1,
+     "name": "Network"
+    }
+   ],
+   "confidence": "partly confirmed",
+   "source": "https://usa.yamaha.com/products/proaudio/mixers/ql_series/specs.html",
+   "note": "Yamaha's spec table mixes QL and CL columns, so double-check these counts."
+  },
+  {
+   "id": "yamaha-ruio16-d",
+   "make": "Yamaha",
+   "model": "RUio16-D",
+   "category": "audio",
+   "summary": "Dante/USB/analog interface for VST Rack: 2 mic/line in, 2 out, phones, Dante 16x16, USB 18 in / 16 out.",
+   "ports": [
+    {
+     "dir": "in",
+     "kind": "analog",
+     "count": 2,
+     "name": "Input"
+    },
+    {
+     "dir": "out",
+     "kind": "analog",
+     "count": 2,
+     "name": "Output"
+    },
+    {
+     "dir": "out",
+     "kind": "analog",
+     "count": 1,
+     "name": "Phones L"
+    },
+    {
+     "dir": "out",
+     "kind": "analog",
+     "count": 1,
+     "name": "Phones R"
+    },
+    {
+     "dir": "in",
+     "kind": "dante",
+     "count": 16,
+     "name": "Dante In"
+    },
+    {
+     "dir": "out",
+     "kind": "dante",
+     "count": 16,
+     "name": "Dante Out"
+    },
+    {
+     "dir": "in",
+     "kind": "usb",
+     "count": 18,
+     "name": "USB In"
+    },
+    {
+     "dir": "out",
+     "kind": "usb",
+     "count": 16,
+     "name": "USB Out"
+    }
+   ],
+   "confidence": "confirmed",
+   "source": "https://usa.yamaha.com/products/proaudio/interfaces/r_series_usb/specs.html",
+   "note": "Yamaha lists USB as 18 in / 16 out."
+  },
+  {
+   "id": "yamaha-rio1608-d",
+   "make": "Yamaha",
+   "model": "Rio1608-D",
+   "category": "audio",
+   "summary": "1st-gen R series (discontinued): 16 mic/line in, 8 out, Dante 16 tx / 8 rx.",
+   "ports": [
+    {
+     "dir": "in",
+     "kind": "analog",
+     "count": 16,
+     "name": "Input"
+    },
+    {
+     "dir": "out",
+     "kind": "analog",
+     "count": 8,
+     "name": "Output"
+    },
+    {
+     "dir": "out",
+     "kind": "dante",
+     "count": 16,
+     "name": "Dante Out"
+    },
+    {
+     "dir": "in",
+     "kind": "dante",
+     "count": 8,
+     "name": "Dante In"
+    }
+   ],
+   "confidence": "confirmed",
+   "source": "https://usa.yamaha.com/products/proaudio/interfaces/r_series_adda/specs.html"
+  },
+  {
+   "id": "yamaha-rio1608-d2",
+   "make": "Yamaha",
+   "model": "Rio1608-D2",
+   "category": "audio",
+   "summary": "2nd-gen R series (discontinued): 16 mic/line in, 8 out, Dante 16 tx / 8 rx.",
+   "ports": [
+    {
+     "dir": "in",
+     "kind": "analog",
+     "count": 16,
+     "name": "Input"
+    },
+    {
+     "dir": "out",
+     "kind": "analog",
+     "count": 8,
+     "name": "Output"
+    },
+    {
+     "dir": "out",
+     "kind": "dante",
+     "count": 16,
+     "name": "Dante Out"
+    },
+    {
+     "dir": "in",
+     "kind": "dante",
+     "count": 8,
+     "name": "Dante In"
+    }
+   ],
+   "confidence": "confirmed",
+   "source": "https://usa.yamaha.com/products/proaudio/interfaces/r_series_adda_2/specs.html"
+  },
+  {
+   "id": "yamaha-rio1608-d3",
+   "make": "Yamaha",
+   "model": "Rio1608-D3",
+   "category": "audio",
+   "summary": "3rd-gen R series (current): 16 mic/line in, 8 out, phones, Dante 16 tx / 10 rx.",
+   "ports": [
+    {
+     "dir": "in",
+     "kind": "analog",
+     "count": 16,
+     "name": "Input"
+    },
+    {
+     "dir": "out",
+     "kind": "analog",
+     "count": 8,
+     "name": "Output"
+    },
+    {
+     "dir": "out",
+     "kind": "analog",
+     "count": 1,
+     "name": "Phones L"
+    },
+    {
+     "dir": "out",
+     "kind": "analog",
+     "count": 1,
+     "name": "Phones R"
+    },
+    {
+     "dir": "out",
+     "kind": "dante",
+     "count": 16,
+     "name": "Dante Out"
+    },
+    {
+     "dir": "in",
+     "kind": "dante",
+     "count": 10,
+     "name": "Dante In"
+    },
+    {
+     "dir": "in",
+     "kind": "ethernet",
+     "count": 1,
+     "name": "Network"
+    }
+   ],
+   "confidence": "confirmed",
+   "source": "https://usa.yamaha.com/products/proaudio/interfaces/r_series_adda_3/specs.html"
+  },
+  {
+   "id": "yamaha-rio3224-d",
+   "make": "Yamaha",
+   "model": "Rio3224-D",
+   "category": "audio",
+   "summary": "1st-gen R series (discontinued): 32 mic/line in, 16 out, 8 ch AES out, Dante 32 tx / 24 rx.",
+   "ports": [
+    {
+     "dir": "in",
+     "kind": "analog",
+     "count": 32,
+     "name": "Input"
+    },
+    {
+     "dir": "out",
+     "kind": "analog",
+     "count": 16,
+     "name": "Output"
+    },
+    {
+     "dir": "out",
+     "kind": "aes",
+     "count": 8,
+     "name": "AES Out"
+    },
+    {
+     "dir": "out",
+     "kind": "dante",
+     "count": 32,
+     "name": "Dante Out"
+    },
+    {
+     "dir": "in",
+     "kind": "dante",
+     "count": 24,
+     "name": "Dante In"
+    }
+   ],
+   "confidence": "confirmed",
+   "source": "https://usa.yamaha.com/products/proaudio/interfaces/r_series_adda/specs.html"
+  },
+  {
+   "id": "yamaha-rio3224-d2",
+   "make": "Yamaha",
+   "model": "Rio3224-D2",
+   "category": "audio",
+   "summary": "2nd-gen R series (discontinued): 32 mic/line in, 16 out, AES out 1-8, Dante 32 tx / 24 rx.",
+   "ports": [
+    {
+     "dir": "in",
+     "kind": "analog",
+     "count": 32,
+     "name": "Input"
+    },
+    {
+     "dir": "out",
+     "kind": "analog",
+     "count": 16,
+     "name": "Output"
+    },
+    {
+     "dir": "out",
+     "kind": "aes",
+     "count": 8,
+     "name": "AES Out"
+    },
+    {
+     "dir": "out",
+     "kind": "dante",
+     "count": 32,
+     "name": "Dante Out"
+    },
+    {
+     "dir": "in",
+     "kind": "dante",
+     "count": 24,
+     "name": "Dante In"
+    }
+   ],
+   "confidence": "confirmed",
+   "source": "https://usa.yamaha.com/products/proaudio/interfaces/r_series_adda_2/specs.html"
+  },
+  {
+   "id": "yamaha-rio3224-d3",
+   "make": "Yamaha",
+   "model": "Rio3224-D3",
+   "category": "audio",
+   "summary": "3rd-gen R series (current): 32 mic/line in, 16 out, 8 ch AES out, phones, Dante 32 tx / 26 rx.",
+   "ports": [
+    {
+     "dir": "in",
+     "kind": "analog",
+     "count": 32,
+     "name": "Input"
+    },
+    {
+     "dir": "out",
+     "kind": "analog",
+     "count": 16,
+     "name": "Output"
+    },
+    {
+     "dir": "out",
+     "kind": "aes",
+     "count": 8,
+     "name": "AES Out"
+    },
+    {
+     "dir": "out",
+     "kind": "analog",
+     "count": 1,
+     "name": "Phones L"
+    },
+    {
+     "dir": "out",
+     "kind": "analog",
+     "count": 1,
+     "name": "Phones R"
+    },
+    {
+     "dir": "out",
+     "kind": "dante",
+     "count": 32,
+     "name": "Dante Out"
+    },
+    {
+     "dir": "in",
+     "kind": "dante",
+     "count": 26,
+     "name": "Dante In"
+    },
+    {
+     "dir": "in",
+     "kind": "ethernet",
+     "count": 1,
+     "name": "Network"
+    }
+   ],
+   "confidence": "confirmed",
+   "source": "https://usa.yamaha.com/products/proaudio/interfaces/r_series_adda_3/specs.html"
+  },
+  {
+   "id": "yamaha-tf-rack",
+   "make": "Yamaha",
+   "model": "TF-Rack",
+   "category": "audio",
+   "summary": "Rack TF mixer: 16 mic/line in, 1 stereo RCA ST in, 16 omni out (8 XLR + 8 TRS), 34x34 USB, 1 NY slot.",
+   "ports": [
+    {
+     "dir": "in",
+     "kind": "analog",
+     "count": 16,
+     "name": "Input"
+    },
+    {
+     "dir": "in",
+     "kind": "analog",
+     "count": 2,
+     "name": "ST In"
+    },
+    {
+     "dir": "out",
+     "kind": "analog",
+     "count": 16,
+     "name": "Omni Out"
+    },
+    {
+     "dir": "out",
+     "kind": "analog",
+     "count": 1,
+     "name": "Phones L"
+    },
+    {
+     "dir": "out",
+     "kind": "analog",
+     "count": 1,
+     "name": "Phones R"
+    },
+    {
+     "dir": "in",
+     "kind": "usb",
+     "count": 34,
+     "name": "USB In"
+    },
+    {
+     "dir": "out",
+     "kind": "usb",
+     "count": 34,
+     "name": "USB Out"
+    },
+    {
+     "dir": "in",
+     "kind": "ethernet",
+     "count": 1,
+     "name": "Network"
+    }
+   ],
+   "confidence": "partly confirmed",
+   "source": "https://usa.yamaha.com/products/proaudio/mixers/tf-rack/specs.html",
+   "options": [
+    {
+     "slot": "Expansion Slot (NY)",
+     "choices": [
+      {
+       "name": "NY64-D (Dante)",
+       "ports": [
+        {
+         "dir": "in",
+         "kind": "dante",
+         "count": 64,
+         "name": "Dante In"
+        },
+        {
+         "dir": "out",
+         "kind": "dante",
+         "count": 64,
+         "name": "Dante Out"
+        }
+       ]
+      }
+     ]
+    }
+   ],
+   "note": "Yamaha doesn't say how many of the NY64-D's 64 channels each way the TF uses. Check the console's patch and delete extras."
+  },
+  {
+   "id": "yamaha-tf1",
+   "make": "Yamaha",
+   "model": "TF1",
+   "category": "audio",
+   "summary": "40-ch TF console: 16 mic/line in, 2 stereo RCA ST in, 16 omni out, 34x34 USB, 1 NY slot (NY64-D).",
+   "ports": [
+    {
+     "dir": "in",
+     "kind": "analog",
+     "count": 16,
+     "name": "Input"
+    },
+    {
+     "dir": "in",
+     "kind": "analog",
+     "count": 4,
+     "name": "ST In"
+    },
+    {
+     "dir": "out",
+     "kind": "analog",
+     "count": 16,
+     "name": "Omni Out"
+    },
+    {
+     "dir": "out",
+     "kind": "analog",
+     "count": 1,
+     "name": "Phones L"
+    },
+    {
+     "dir": "out",
+     "kind": "analog",
+     "count": 1,
+     "name": "Phones R"
+    },
+    {
+     "dir": "in",
+     "kind": "usb",
+     "count": 34,
+     "name": "USB In"
+    },
+    {
+     "dir": "out",
+     "kind": "usb",
+     "count": 34,
+     "name": "USB Out"
+    },
+    {
+     "dir": "in",
+     "kind": "ethernet",
+     "count": 1,
+     "name": "Network"
+    }
+   ],
+   "confidence": "partly confirmed",
+   "source": "https://usa.yamaha.com/products/proaudio/mixers/tf/specs.html ; https://usa.yamaha.com/products/proaudio/mixers/tf/faq.html",
+   "options": [
+    {
+     "slot": "Expansion Slot (NY)",
+     "choices": [
+      {
+       "name": "NY64-D (Dante)",
+       "ports": [
+        {
+         "dir": "in",
+         "kind": "dante",
+         "count": 64,
+         "name": "Dante In"
+        },
+        {
+         "dir": "out",
+         "kind": "dante",
+         "count": 64,
+         "name": "Dante Out"
+        }
+       ]
+      }
+     ]
+    }
+   ],
+   "note": "Yamaha doesn't say how many of the NY64-D's 64 channels each way the TF uses. Check the console's patch and delete extras."
+  },
+  {
+   "id": "yamaha-tf3",
+   "make": "Yamaha",
+   "model": "TF3",
+   "category": "audio",
+   "summary": "48-ch TF console: 24 mic/line in, 2 stereo RCA ST in, 16 omni out, 34x34 USB, 1 NY slot (NY64-D).",
+   "ports": [
+    {
+     "dir": "in",
+     "kind": "analog",
+     "count": 24,
+     "name": "Input"
+    },
+    {
+     "dir": "in",
+     "kind": "analog",
+     "count": 4,
+     "name": "ST In"
+    },
+    {
+     "dir": "out",
+     "kind": "analog",
+     "count": 16,
+     "name": "Omni Out"
+    },
+    {
+     "dir": "out",
+     "kind": "analog",
+     "count": 1,
+     "name": "Phones L"
+    },
+    {
+     "dir": "out",
+     "kind": "analog",
+     "count": 1,
+     "name": "Phones R"
+    },
+    {
+     "dir": "in",
+     "kind": "usb",
+     "count": 34,
+     "name": "USB In"
+    },
+    {
+     "dir": "out",
+     "kind": "usb",
+     "count": 34,
+     "name": "USB Out"
+    },
+    {
+     "dir": "in",
+     "kind": "ethernet",
+     "count": 1,
+     "name": "Network"
+    }
+   ],
+   "confidence": "partly confirmed",
+   "source": "https://usa.yamaha.com/products/proaudio/mixers/tf/specs.html ; https://usa.yamaha.com/products/proaudio/mixers/tf/faq.html",
+   "options": [
+    {
+     "slot": "Expansion Slot (NY)",
+     "choices": [
+      {
+       "name": "NY64-D (Dante)",
+       "ports": [
+        {
+         "dir": "in",
+         "kind": "dante",
+         "count": 64,
+         "name": "Dante In"
+        },
+        {
+         "dir": "out",
+         "kind": "dante",
+         "count": 64,
+         "name": "Dante Out"
+        }
+       ]
+      }
+     ]
+    }
+   ],
+   "note": "Yamaha doesn't say how many of the NY64-D's 64 channels each way the TF uses. Check the console's patch and delete extras."
+  },
+  {
+   "id": "yamaha-tf5",
+   "make": "Yamaha",
+   "model": "TF5",
+   "category": "audio",
+   "summary": "48-ch TF console: 32 mic/line in, 2 stereo RCA ST in, 16 omni out, 34x34 USB, 1 NY slot (NY64-D).",
+   "ports": [
+    {
+     "dir": "in",
+     "kind": "analog",
+     "count": 32,
+     "name": "Input"
+    },
+    {
+     "dir": "in",
+     "kind": "analog",
+     "count": 4,
+     "name": "ST In"
+    },
+    {
+     "dir": "out",
+     "kind": "analog",
+     "count": 16,
+     "name": "Omni Out"
+    },
+    {
+     "dir": "out",
+     "kind": "analog",
+     "count": 1,
+     "name": "Phones L"
+    },
+    {
+     "dir": "out",
+     "kind": "analog",
+     "count": 1,
+     "name": "Phones R"
+    },
+    {
+     "dir": "in",
+     "kind": "usb",
+     "count": 34,
+     "name": "USB In"
+    },
+    {
+     "dir": "out",
+     "kind": "usb",
+     "count": 34,
+     "name": "USB Out"
+    },
+    {
+     "dir": "in",
+     "kind": "ethernet",
+     "count": 1,
+     "name": "Network"
+    }
+   ],
+   "confidence": "partly confirmed",
+   "source": "https://usa.yamaha.com/products/proaudio/mixers/tf/specs.html ; https://usa.yamaha.com/products/proaudio/mixers/tf/faq.html",
+   "options": [
+    {
+     "slot": "Expansion Slot (NY)",
+     "choices": [
+      {
+       "name": "NY64-D (Dante)",
+       "ports": [
+        {
+         "dir": "in",
+         "kind": "dante",
+         "count": 64,
+         "name": "Dante In"
+        },
+        {
+         "dir": "out",
+         "kind": "dante",
+         "count": 64,
+         "name": "Dante Out"
+        }
+       ]
+      }
+     ]
+    }
+   ],
+   "note": "Yamaha doesn't say how many of the NY64-D's 64 channels each way the TF uses. Check the console's patch and delete extras."
+  },
+  {
+   "id": "yamaha-tio1608-d",
+   "make": "Yamaha",
+   "model": "Tio1608-D",
+   "category": "audio",
+   "summary": "TF-companion I/O rack (discontinued): 16 combo mic/line in, 8 out, Dante 16 tx / 8 rx, 44.1/48 kHz.",
+   "ports": [
+    {
+     "dir": "in",
+     "kind": "analog",
+     "count": 16,
+     "name": "Input"
+    },
+    {
+     "dir": "out",
+     "kind": "analog",
+     "count": 8,
+     "name": "Output"
+    },
+    {
+     "dir": "out",
+     "kind": "dante",
+     "count": 16,
+     "name": "Dante Out"
+    },
+    {
+     "dir": "in",
+     "kind": "dante",
+     "count": 8,
+     "name": "Dante In"
+    }
+   ],
+   "confidence": "confirmed",
+   "source": "https://usa.yamaha.com/products/proaudio/interfaces/tio1608-d/specs.html"
+  },
+  {
+   "id": "yamaha-tio1608-d2",
+   "make": "Yamaha",
+   "model": "Tio1608-D2",
+   "category": "audio",
+   "summary": "Current Tio: 16 combo mic/line in, 8 out, Dante 16 tx / 8 rx, up to 96 kHz.",
+   "ports": [
+    {
+     "dir": "in",
+     "kind": "analog",
+     "count": 16,
+     "name": "Input"
+    },
+    {
+     "dir": "out",
+     "kind": "analog",
+     "count": 8,
+     "name": "Output"
+    },
+    {
+     "dir": "out",
+     "kind": "dante",
+     "count": 16,
+     "name": "Dante Out"
+    },
+    {
+     "dir": "in",
+     "kind": "dante",
+     "count": 8,
+     "name": "Dante In"
+    }
+   ],
+   "confidence": "confirmed",
+   "source": "https://usa.yamaha.com/products/proaudio/interfaces/tio1608-d2/specs.html"
+  },
+  {
+   "id": "allen-heath-me-u",
+   "make": "Allen & Heath",
+   "model": "ME-U",
+   "category": "audio",
+   "summary": "10-port PoE hub for ME-1/ME-500 personal mixers. Its standard interface card takes an A&H console feed; an option slot takes an M-DANTE or M-MADI card for third-party feeds.",
+   "ports": [
+    {
+     "dir": "out",
+     "kind": "other",
+     "count": 10,
+     "name": "ME Port"
+    },
+    {
+     "dir": "in",
+     "kind": "other",
+     "count": 1,
+     "name": "ME In"
+    },
+    {
+     "dir": "out",
+     "kind": "other",
+     "count": 1,
+     "name": "Link"
+    },
+    {
+     "dir": "in",
+     "kind": "ethernet",
+     "count": 1,
+     "name": "Network"
+    }
+   ],
+   "confidence": "partly confirmed",
+   "source": "https://www.allen-heath.com/hardware/me-series/me-u/ ; https://www.allen-heath.com/hardware/me-series/me-1/",
+   "options": [
+    {
+     "slot": "Option card slot",
+     "choices": [
+      {
+       "name": "M-DANTE (Dante)",
+       "ports": [
+        {
+         "dir": "in",
+         "kind": "dante",
+         "count": 64,
+         "name": "Dante In"
+        }
+       ]
+      },
+      {
+       "name": "M-MADI (MADI)",
+       "ports": [
+        {
+         "dir": "in",
+         "kind": "madi",
+         "count": 64,
+         "name": "MADI In"
+        }
+       ]
+      }
+     ]
+    }
+   ],
+   "note": "The M-DANTE card brings up to 64 Dante channels into the ME system (an ME-1 mixes up to 40 of them)."
+  },
+  {
+   "id": "shure-ulxd4d",
+   "make": "Shure",
+   "model": "ULXD4D",
+   "category": "audio",
+   "summary": "Dual-channel ULX-D receiver: 2 XLR outs, Dante on 2 ports, 1+2 summing.",
+   "ports": [
+    {
+     "dir": "out",
+     "kind": "analog",
+     "count": 2,
+     "name": "XLR Out"
+    },
+    {
+     "dir": "out",
+     "kind": "dante",
+     "count": 2,
+     "name": "Dante Out"
+    },
+    {
+     "dir": "in",
+     "kind": "ethernet",
+     "count": 1,
+     "name": "Dante Primary"
+    },
+    {
+     "dir": "in",
+     "kind": "ethernet",
+     "count": 1,
+     "name": "Dante Secondary"
+    }
+   ],
+   "confidence": "partly confirmed",
+   "source": "https://www.shure.com/en-US/docs/guide/ULXD-DQ",
+   "note": "One Dante channel per receiver channel (Shure doesn't state the count outright). 1+2 summing feeds these same outputs."
+  },
+  {
+   "id": "shure-ulxd4q",
+   "make": "Shure",
+   "model": "ULXD4Q",
+   "category": "audio",
+   "summary": "Quad-channel ULX-D receiver: 4 XLR outs (mic/line switch each), Dante on 2 ports (Primary/Secondary), summing modes that replace outputs rather than adding new ones.",
+   "ports": [
+    {
+     "dir": "out",
+     "kind": "analog",
+     "count": 4,
+     "name": "XLR Out"
+    },
+    {
+     "dir": "out",
+     "kind": "dante",
+     "count": 4,
+     "name": "Dante Out"
+    },
+    {
+     "dir": "in",
+     "kind": "ethernet",
+     "count": 1,
+     "name": "Dante Primary"
+    },
+    {
+     "dir": "in",
+     "kind": "ethernet",
+     "count": 1,
+     "name": "Dante Secondary"
+    }
+   ],
+   "confidence": "partly confirmed",
+   "source": "https://www.shure.com/en-US/docs/guide/ULXD-DQ ; https://www.shure.com/en-US/products/wireless-systems/ulx-d_digital_wireless/ulxd4q",
+   "note": "One Dante channel per receiver channel (Shure doesn't state the count outright). Summing modes feed these same outputs."
+  },
+  {
+   "id": "audinate-dante-via",
+   "make": "Audinate",
+   "model": "Dante Via",
+   "category": "audio",
+   "summary": "Software router putting apps and local hardware on Dante: 48x48 total, 16x16 per ASIO/Core Audio app (2x2 WDM), 32x32 hardware, 48 kHz only.",
+   "ports": [
+    {
+     "dir": "in",
+     "kind": "dante",
+     "count": 48,
+     "name": "Dante In"
+    },
+    {
+     "dir": "out",
+     "kind": "dante",
+     "count": 48,
+     "name": "Dante Out"
+    }
+   ],
+   "confidence": "confirmed",
+   "source": "https://dev.audinate.com/GA/via/userguide-1-2/webhelp/content/specifications.htm ; https://www.getdante.com/products/software-essentials/dante-via/",
+   "note": "48 kHz only. Apps get up to 16x16 each (2x2 for WDM), local hardware up to 32x32."
+  },
+  {
+   "id": "audinate-dvs",
+   "make": "Audinate",
+   "model": "Dante Virtual Soundcard",
+   "category": "audio",
+   "summary": "Software Dante interface for Windows and macOS. Standard edition: 64x64 at 48 kHz.",
+   "ports": [
+    {
+     "dir": "in",
+     "kind": "dante",
+     "count": 64,
+     "name": "Dante In"
+    },
+    {
+     "dir": "out",
+     "kind": "dante",
+     "count": 64,
+     "name": "Dante Out"
+    }
+   ],
+   "confidence": "partly confirmed",
+   "source": "https://www.getdante.com/products/software-essentials/dante-virtual-soundcard/compare/ ; https://www.getdante.com/products/software-essentials/dante-virtual-soundcard/",
+   "note": "At 96 kHz it's 32x32. Same limits on Windows and macOS."
+  },
+  {
+   "id": "audinate-dvs-pro",
+   "make": "Audinate",
+   "model": "Dante Virtual Soundcard Pro",
+   "category": "audio",
+   "summary": "Software Dante interface for Windows and macOS. Pro edition: 128x128 at 48/96 kHz.",
+   "ports": [
+    {
+     "dir": "in",
+     "kind": "dante",
+     "count": 128,
+     "name": "Dante In"
+    },
+    {
+     "dir": "out",
+     "kind": "dante",
+     "count": 128,
+     "name": "Dante Out"
+    }
+   ],
+   "confidence": "partly confirmed",
+   "source": "https://www.getdante.com/products/software-essentials/dante-virtual-soundcard/compare/ ; https://www.getdante.com/products/software-essentials/dante-virtual-soundcard/",
+   "note": "At 192 kHz it's 16x16. Same limits on Windows and macOS."
+  }
+ ]
+}

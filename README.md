@@ -10,6 +10,7 @@ what you documented.
 - **Drift.** It shows where the live routing differs from the documented routing: a new route nobody documented, or a documented route that's gone.
 - **Videohubs.** It reads labels and routing from Blackmagic Videohubs. A change on a locked output counts as drift.
 - **Gear that isn't on the network:** analog, AES, MADI, SDI, HDMI, DMX and more. Add it by hand and patch it with cable labels.
+- **Device library.** Pick a model (Yamaha DM7, Rio, Tio, TF, RUio16-D; Allen & Heath ME-U; Shure ULX-D; Dante Virtual Soundcard and Via…) and its inputs, outputs, Dante channels and option cards are filled in for you. This works offline: you can plan a system before the gear is on the network.
 - **Patch table** for each room, with CSV export and print or PDF.
 - **Works on phones and tablets.** You can add it to your home screen as an app.
 - **Read-only toward your gear.** Patchy only listens. It never changes a Dante subscription, a Videohub route or any other setting.
@@ -40,6 +41,18 @@ network that can see Dante's mDNS. If it has more than one network adapter, choo
 3. Add the gear Dante can't see (amps, speakers, analog boxes, video gear) with **+ Device**, give it ports, then
    **+** on a port to patch it.
 4. **Arrange** lays each room out left to right by signal flow.
+
+### Planning offline with the device library
+
+1. **+ Device → Start from**: choose the model, and pick any option card (e.g. a PY64-D in a DM7, an NY64-D in a TF).
+   The device gets all its local ports and its Dante channels, and you can patch them right away.
+2. When the gear is on the network, open the device, pick its **Dante device** in Details and save. The live
+   channels take over the placeholders by channel number, and your planned routes are checked against the live ones.
+3. For a device Dante already found (e.g. a console), use **+ Ports from a model** to add its local inputs and
+   outputs. Dante channels are skipped because they come from the network.
+
+The library is `patchy/static/library.json`, built from manufacturers' spec sheets. Models with a note have a
+number the spec sheet didn't fully confirm.
 
 ## Phones, tablets and other computers
 

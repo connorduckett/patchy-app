@@ -192,8 +192,10 @@ class DanteSync:
             p = s.one("SELECT * FROM ports WHERE device_id=? AND direction=? AND kind='dante' AND name=?",
                       (device_id, direction, name))
         if p:
-            if p["name"] != name or (number is not None and p["number"] != number):
-                s.x("UPDATE ports SET name=?, number=COALESCE(?, number) WHERE id=?", (name, number, p["id"]))
+            if p["name"] != name or (number is not None and p["number"] != number) or p["source"] != "dante":
+                # (a library placeholder becomes the real channel here)
+                s.x("UPDATE ports SET name=?, number=COALESCE(?, number), source='dante' WHERE id=?",
+                    (name, number, p["id"]))
             return p["id"]
         return s.x("INSERT INTO ports(device_id, direction, kind, number, name, source) VALUES (?,?, 'dante', ?,?, 'dante')",
                    (device_id, direction, number, name))
@@ -227,7 +229,8 @@ class DanteSync:
             for rx_dev, n in rx_rows.items():
                 rx_id = dev_ids.get(rx_dev) or self._device(rx_dev, now, meta_by.get(rx_dev))
                 dev_ids[rx_dev] = rx_id
-                known = s.one("SELECT COUNT(*) n FROM ports WHERE device_id=? AND direction='in' AND kind='dante'",
+                known = s.one("SELECT COUNT(*) n FROM ports WHERE device_id=? AND direction='in' AND kind='dante' "
+                              "AND source='dante'",
                               (rx_id,))["n"]
                 if n >= known:   # full table: safe to judge missing routes
                     seen_rx.add(rx_id)

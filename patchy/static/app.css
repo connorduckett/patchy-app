@@ -257,3 +257,6 @@ dialog h3 { margin-top: 0; overflow-wrap: anywhere; }
   .kind { background: none; border: 1px solid #999; color: #000 !important; }
   .pill { background: none !important; color: #000 !important; border: 1px solid #999; }
 }
+
+.libcard { border: 1px solid var(--line); border-radius: 8px; padding: 8px 10px; margin: 8px 0; display: grid; gap: 4px; }
+.libcard .grid { margin-top: 4px; }

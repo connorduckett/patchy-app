@@ -121,7 +121,7 @@ const pdev = (pid) => IX.dev.get(IX.port.get(pid).device_id);
 const pname = (pid) => { const p = IX.port.get(pid); return p.label ? `${p.name} (${p.label})` : p.name; };
 const roomName = (id) => (S.rooms.find((r) => r.id === id) || {}).name || "Unassigned";
 const seenAgo = (d) => {
-  if (d.source !== "dante" && d.source !== "videohub") return null;
+  if (!d.dante_name && d.source !== "videohub") return null;   // (hand-added devices linked to Dante count too)
   if (!d.last_seen) return Infinity;
   return Date.now() / 1000 - d.last_seen;
 };
@@ -494,7 +494,7 @@ function renderPanel() {
   if (selected.type === "device") {
     const d = IX.dev.get(selected.id);
     if (!d) return closePanel();
-    html += `<h2>${esc(d.name)}</h2><div class="sub">${esc(roomName(d.room_id))}${seenAgo(d) !== null ? ` · ${d.source === "dante" ? "Dante" : "Videohub"}, seen ${ago(seenAgo(d))}` : ""}${d.dante_name && d.dante_name !== d.name ? ` · Dante name ${esc(d.dante_name)}` : ""}</div>
+    html += `<h2>${esc(d.name)}</h2><div class="sub">${esc(roomName(d.room_id))}${seenAgo(d) !== null ? ` · ${d.source === "videohub" ? "Videohub" : "Dante"}, seen ${ago(seenAgo(d))}` : ""}${d.dante_name && d.dante_name !== d.name ? ` · Dante name ${esc(d.dante_name)}` : ""}</div>
       <details class="devdetails" ${narrow() && !panelDirty ? "" : "open"}><summary><h3>Details</h3></summary>
       <form id="devform" class="grid">
         <label>Name</label><input name="name" value="${esc(d.name)}">
@@ -503,6 +503,7 @@ function renderPanel() {
         <label>Make</label><input name="make" value="${esc(d.make)}">
         <label>Model</label><input name="model" value="${esc(d.model)}">
         <label>${d.source === "dante" ? "Dante IP" : "IP"}</label><input name="ip" value="${esc(d.ip)}">
+        ${d.source === "manual" && (IX.portsByDev.get(d.id) || []).some((p) => p.kind === "dante") ? `<label>Dante device</label><select name="dante_name"><option value="">Not linked yet</option>${S.devices.filter((x) => x.source === "dante" && x.dante_name && x.id !== d.id).sort((a, b) => a.dante_name.localeCompare(b.dante_name)).map((x) => `<option value="${esc(x.dante_name)}" ${x.dante_name === d.dante_name ? "selected" : ""}>${esc(x.dante_name)}${x.model ? " · " + esc(x.model) : ""}</option>`).join("")}</select>` : ""}
         <label>Control IP</label><input name="control_ip" value="${esc(d.control_ip || "")}" placeholder="Control / editor network port">        <label>Location</label><input name="location" value="${esc(d.location)}" placeholder="Rack, switch port…">
         <label>Notes</label><textarea name="notes" rows="3">${esc(d.notes)}</textarea>
       </form>
@@ -510,7 +511,8 @@ function renderPanel() {
         <button class="danger" id="devdel">${d.source !== "manual" ? "Hide device" : "Delete device"}</button></div></details>
       <h3>Inputs</h3>${portTable(d, "in", showAllPorts)}
       <h3>Outputs</h3>${portTable(d, "out", showAllPorts)}
-      <div class="row"><button id="addports">+ Add ports</button></div>`;
+      <div class="row"><button id="addports">+ Add ports</button><button id="addmodel">+ Ports from a model</button></div>
+      ${d.source === "manual" && (IX.portsByDev.get(d.id) || []).some((p) => p.kind === "dante") && !d.dante_name ? '<p class="sub">Its Dante channels are placeholders. Once it\'s on the network, pick its <b>Dante device</b> in Details and the live channels and routes take over.</p>' : ""}`;
   } else if (selected.type === "edge") {
     const [f, t] = selected.id.split(">").map(Number);
     const cs = IX.conns.filter((c) => pdev(c.from_port).id === f && pdev(c.to_port).id === t)
@@ -582,6 +584,7 @@ function bindPanel() {
     await write("DELETE", `/api/devices/${d.id}`); closePanel();
   };
   const ap = $("#addports", P); if (ap) ap.onclick = () => addPortsDialog(selected.id);
+  const am = $("#addmodel", P); if (am) am.onclick = () => modelPortsDialog(selected.id);
 }
 
 // ---------- dialogs ----------
@@ -642,18 +645,94 @@ function addPortsDialog(did) {
 function addDeviceDialog() {
   const rid = typeof room === "number" ? room : (S.rooms[0] || {}).id;
   dialog(`<h3>Add device</h3><div class="grid">
+    <label>Start from</label>${libSelect()}
     <label>Name</label><input name="name" required>
     <label>Room</label><select name="room_id"><option value="">No room</option>${S.rooms.map((r) => `<option value="${r.id}" ${r.id === rid ? "selected" : ""}>${esc(r.name)}</option>`).join("")}</select>
     <label>Category</label><select name="category">${CATS.map((c) => `<option>${c}</option>`).join("")}</select>
     <label>Make</label><input name="make"><label>Model</label><input name="model">
     <label>IP</label><input name="ip"><label>Location</label><input name="location"></div>
-    <p class="sub">Dante devices appear on their own after a sync. Use this for analog/AES gear, speakers, amps, video and lighting.</p>`, async (f) => {
+    <div id="libopts"></div>
+    <p class="sub">Pick a model to get its inputs, outputs and Dante channels, or leave it on Custom and add ports yourself.
+      Dante devices on the network also appear on their own after a sync.</p>`, async (f) => {
     const el = $("#canvas");
     f.room_id = f.room_id ? +f.room_id : null;
+    f.choices = libChoices(f);
+    if (!f.library) f.library = null;
     f.x = Math.round((-cam.x + el.clientWidth / 2) / cam.k); f.y = Math.round((-cam.y + el.clientHeight / 2) / cam.k);
     const r = await write("POST", "/api/devices", f);
     openPanel({ type: "device", id: r.id });
   });
+  bindLib((m) => {
+    const fm = $("#dlgform");
+    if (!m) return;
+    fm.make.value = m.make; fm.model.value = m.model; fm.category.value = m.category || "audio";
+    const nm = fm.elements.name;   // (fm.name is the form's own name attribute)
+    if (!nm.value || nm.dataset.auto) { nm.value = m.model; nm.dataset.auto = "1"; }
+  });
+}
+
+// ---------- device library ----------
+let LIB = null;
+async function loadLib() {
+  if (!LIB) { try { LIB = (await (await fetch("/library.json")).json()).models; } catch { LIB = []; } }
+  return LIB;
+}
+function libSelect() {
+  const byMake = new Map();
+  for (const m of LIB || []) { if (!byMake.has(m.make)) byMake.set(m.make, []); byMake.get(m.make).push(m); }
+  return `<select name="library" id="libsel"><option value="">Custom (no model)</option>${[...byMake].map(([mk, ms]) =>
+    `<optgroup label="${esc(mk)}">${ms.map((m) => `<option value="${esc(m.id)}">${esc(m.model)}</option>`).join("")}</optgroup>`).join("")}</select>`;
+}
+const LIB_ORDER = ["analog in", "aes in", "dante in", "usb in", "analog out", "aes out", "dante out", "usb out"];
+function libSummary(groups) {
+  const t = {};
+  for (const g of groups) { const k = `${g.kind} ${g.dir}`; t[k] = (t[k] || 0) + (g.count || 1); }
+  const rank = (k) => { const i = LIB_ORDER.indexOf(k); return i < 0 ? 99 : i; };
+  return Object.entries(t).sort((a, b) => rank(a[0]) - rank(b[0])).map(([k, n]) => `${n} ${k}`).join(" · ");
+}
+function libChoices(f) {
+  const out = {};
+  for (const [k, v] of Object.entries(f)) if (k.startsWith("opt-") && v !== "") out[k.slice(4)] = +v;
+  return out;
+}
+function bindLib(onPick) {
+  const sel = $("#libsel"), box = $("#libopts");
+  const show = () => {
+    const m = (LIB || []).find((x) => x.id === sel.value);
+    if (onPick) onPick(m);
+    if (!m) { box.innerHTML = ""; return; }
+    const opts = (m.options || []).map((o, i) => `<label>${esc(o.slot)}</label><select name="opt-${i}"><option value="">Empty</option>${o.choices.map((c, j) => `<option value="${j}" ${o.default === j ? "selected" : ""}>${esc(c.name)}</option>`).join("")}</select>`).join("");
+    box.innerHTML = `<div class="libcard"><b>${esc(m.make)} ${esc(m.model)}</b>${m.summary ? `<div class="sub">${esc(m.summary)}</div>` : ""}
+      <div class="sub">Built in: ${esc(libSummary(m.ports || [])) || "no audio ports"}</div>
+      ${opts ? `<div class="grid">${opts}</div>` : ""}<div class="sub" id="libcards"></div>
+      ${m.note ? `<div class="sub">${esc(m.note)}</div>` : ""}</div>`;
+    const cardsLine = () => {
+      const f = libChoices(Object.fromEntries(new FormData($("#dlgform"))));
+      $("#libcards").textContent = Object.entries(f).map(([i, j]) => {
+        const o = m.options[+i], c = o.choices[j];
+        return `${o.slot}: ${c.name} (${libSummary(c.ports || []) || "no ports"})${c.separate ? ", added as its own Dante device" : ""}`;
+      }).join(" · ");
+    };
+    $$("select", box).forEach((x) => x.onchange = cardsLine);
+    cardsLine();
+  };
+  sel.onchange = show;
+  const nm = $("#dlgform").elements.name;
+  if (nm) nm.addEventListener("input", () => { nm.dataset.auto = ""; });
+}
+async function modelPortsDialog(did) {
+  await loadLib();
+  const d = IX.dev.get(did);
+  dialog(`<h3>Ports from a model</h3><p class="sub">Adds the model's inputs and outputs to ${esc(d.name)}. Ports it already has are skipped${d.source === "dante" ? ", and so are Dante channels, which come from the network" : ""}.</p>
+    <div class="grid"><label>Model</label>${libSelect()}</div><div id="libopts"></div>`, async (f) => {
+    if (!f.library) throw new Error("Choose a model");
+    const r = await write("POST", `/api/devices/${did}/library`, { model: f.library, choices: libChoices(f) });
+    toast(`Added ${r.ports} port(s)` + (r.devices.length ? ` and ${r.devices.length} card device(s)` : ""));
+  });
+  bindLib();
+  const want = (d.model || "").toLowerCase().replace(/[^a-z0-9]/g, "");
+  const m0 = want && (LIB || []).find((m) => m.model.toLowerCase().replace(/[^a-z0-9]/g, "") === want);
+  if (m0) { $("#libsel").value = m0.id; $("#libsel").onchange(); }
 }
 
 // ---------- settings ----------
@@ -827,8 +906,8 @@ async function arrangeRoom(rid) {
 }
 $("#driftonly").onchange = renderMap;
 $("#alldante").onchange = renderTable;
-$("#adddevice").onclick = addDeviceDialog;
-$("#emptyadd").onclick = addDeviceDialog;
+$("#adddevice").onclick = async () => { await loadLib(); addDeviceDialog(); };
+$("#emptyadd").onclick = async () => { await loadLib(); addDeviceDialog(); };
 $("#settings").onclick = settingsDialog;
 $("#emptysettings").onclick = settingsDialog;
 $("#search").oninput = (e) => { query = e.target.value.trim().toLowerCase(); render(); };

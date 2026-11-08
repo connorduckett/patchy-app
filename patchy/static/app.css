@@ -260,3 +260,8 @@ dialog h3 { margin-top: 0; overflow-wrap: anywhere; }
 
 .libcard { border: 1px solid var(--line); border-radius: 8px; padding: 8px 10px; margin: 8px 0; display: grid; gap: 4px; }
 .libcard .grid { margin-top: 4px; }
+.plabel { display: block; width: 100%; box-sizing: border-box; margin-top: 2px; padding: 2px 6px; font: inherit; font-size: 12px; color: inherit; background: transparent; border: 1px solid transparent; border-radius: 5px; }
+.plabel::placeholder { color: var(--dim); opacity: .55; }
+.plabel:hover { border-color: var(--line); }
+.plabel:focus { border-color: var(--accent); outline: none; background: rgba(127,127,127,.08); }
+.plabel.bad { border-color: #e5484d; }

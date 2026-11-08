@@ -450,6 +450,38 @@ function renderMapKeepPos(saved) {
 }
 
 // ---------- side panel ----------
+// Port labels are typed straight into the panel. Tab or Enter saves and moves to the next port
+// (Shift+Tab goes back, Esc undoes). Refreshes leave the panel alone while a label is being typed.
+let labelEditing = false, labelReload = null;
+function bindLabels(P) {
+  const inputs = () => $$(".plabel", P);
+  const save = async (el) => {
+    const p = IX.port.get(+el.dataset.label), v = el.value.trim();
+    if (!p || v === (p.label || "")) return;
+    p.label = v;
+    try {
+      await api("PATCH", `/api/ports/${p.id}`, { label: v });
+      el.classList.remove("bad");
+      clearTimeout(labelReload);
+      labelReload = setTimeout(() => { if (!labelEditing) load(); }, 1500);
+    } catch (e) { el.classList.add("bad"); toast("Label not saved: " + (e.message || e)); }
+  };
+  inputs().forEach((el) => {
+    el.addEventListener("focus", () => { labelEditing = true; el.select(); });
+    el.addEventListener("blur", () => { labelEditing = false; save(el); });
+    el.addEventListener("keydown", (ev) => {
+      if (ev.key === "Tab" || ev.key === "Enter") {
+        ev.preventDefault();
+        const all = inputs(), next = all[all.indexOf(el) + (ev.shiftKey ? -1 : 1)];
+        if (next) { next.focus(); next.scrollIntoView({ block: "nearest" }); } else el.blur();
+      } else if (ev.key === "Escape") {
+        ev.stopPropagation();
+        el.value = (IX.port.get(+el.dataset.label) || {}).label || "";
+        el.blur();
+      }
+    });
+  });
+}
 let panelDirty = false;   // unsaved edits in the device form: background refreshes must not redraw it
 function openPanel(sel) {
   if (panelDirty && !confirm("Discard unsaved changes to this device?")) return;
@@ -477,7 +509,8 @@ function portTable(d, direction, showAll) {
   const rows = shown.map((p) => {
     const cs = (IX.connsByPort.get(p.id) || []).filter((c) => (direction === "out" ? c.from_port : c.to_port) === p.id);
     return `<tr><td><span class="kind ${p.kind}">${p.kind}</span></td>
-      <td>${esc(p.name)}${p.label ? `<div class="sub">${esc(p.label)}</div>` : ""}</td>
+      <td>${esc(p.name)}${p.source === "videohub" ? (p.label ? `<div class="sub">${esc(p.label)}</div>` : "")
+        : `<input class="plabel" data-label="${p.id}" value="${esc(p.label)}" placeholder="Label" aria-label="Label for ${esc(p.name)}" autocomplete="off">`}</td>
       <td>${xpCell(p) + cs.map((c) => connRow(c, direction, p.id)).join("") || '<span class="sub">—</span>'}</td>
       <td style="white-space:nowrap"><button class="mini" data-patch="${p.id}" title="Patch">+</button>
         <button class="mini" data-editport="${p.id}" title="Label / rename">✎</button></td></tr>`;
@@ -564,6 +597,7 @@ function bindPanel() {
   });
   $$("[data-patch]", P).forEach((el) => el.onclick = () => patchDialog(+el.dataset.patch));
   $$("[data-editport]", P).forEach((el) => el.onclick = () => portDialog(+el.dataset.editport));
+  bindLabels(P);
   const sa = $("[data-showall]", P); if (sa) sa.onclick = () => { showAllPorts = true; renderPanel(); };
   const save = $("#devsave", P);
   const form = $("#devform", P);
@@ -855,7 +889,7 @@ function render() {
   if (view === "map") renderMap();
   if (view === "table") renderTable();
   if (view === "activity") renderActivity();
-  if (selected && !panelDirty) renderPanel();
+  if (selected && !panelDirty && !labelEditing) renderPanel();
 }
 $$(".views button").forEach((b) => b.onclick = () => { view = b.dataset.view; ls.set("sm-view", view); render(); if (view === "map") fit(); });
 $("#fit").onclick = fit;
